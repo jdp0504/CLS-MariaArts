@@ -2,59 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Models\Customer;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    public function showProfile()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
-    }
-
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if (session('role') !== 'customer') {
+            return redirect('/my-login')->with('error', 'Please log in to access your profile.');
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $customer = Customer::where('customerID', session('user_id'))->firstOrFail();
+        return view('customer.profile', compact('customer'));
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
+    public function updateProfile(Request $request)
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+        if (session('role') !== 'customer') {
+            return redirect('/my-login')->with('error', 'Please log in to access your profile.');
+        }
+
+        $customer = Customer::where('customerID', session('user_id'))->firstOrFail();
+
+        $request->validate([
+            'customerName' => 'required|string|max:150',
+            'email'        => 'required|email|max:100|unique:Customer,email,' . $customer->customerID . ',customerID',
+            'phoneNumber'  => 'nullable|string|max:20',
+            'birthDate'    => 'nullable|date',
         ]);
 
-        $user = $request->user();
+        $customer->update([
+            'customerName' => $request->customerName,
+            'email'        => $request->email,
+            'phoneNumber'  => $request->phoneNumber,
+            'birthDate'    => $request->birthDate,
+        ]);
 
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        return redirect('/customer/profile')
+            ->with('success', 'Your profile has been updated successfully.');
     }
 }

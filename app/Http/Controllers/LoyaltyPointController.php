@@ -8,7 +8,7 @@ use App\Models\PurchaseTransaction;
 use App\Models\Redemption;
 use App\Models\Reward;
 
-class CashierController extends Controller
+class LoyaltyPointController extends Controller
 {
     private function checkAccess()
     {
@@ -17,7 +17,13 @@ class CashierController extends Controller
         }
     }
 
-    // ─── Manage Loyalty Points ───
+    public function showCashierDashboard()
+    {
+        if (session('role') !== 'cashier') {
+            return redirect('/my-login')->with('error', 'Please log in to access the dashboard.');
+        }
+        return view('cashier-dashboard');
+    }
 
     public function managePoints()
     {
@@ -108,5 +114,4 @@ class CashierController extends Controller
         return redirect('/cashier/manage-points')
             ->with('success', "{$customer->customerName} redeemed {$reward->rewardName}. Redemption: $redemptionID");
     }
-
 }
