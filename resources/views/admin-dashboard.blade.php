@@ -349,16 +349,16 @@
 
         <div class="stats-row">
             <div class="stat-box">
-                <span class="label">Total Members</span>
-                <span class="value pending">—</span>
+                <span class="label">Active Users</span>
+                <span class="value">{{ $totalMembers }}</span>
             </div>
             <div class="stat-box">
                 <span class="label">Active Rewards</span>
-                <span class="value pending">—</span>
+                <span class="value">{{ $activeRewards }}</span>
             </div>
             <div class="stat-box">
                 <span class="label">Claims This Month</span>
-                <span class="value pending">—</span>
+                <span class="value">{{ $claimsThisMonth }}</span>
             </div>
         </div>
 
@@ -392,14 +392,14 @@
                 </div>
                 <p>Broadcast system status updates, send custom text promotions, or schedule automatic alert announcements.</p>
                 <a href="/admin/generate-notification">
-                    Launch Messages
+                    Generate Notification
                     <span class="arrow">→</span>
                 </a>
             </div>
 
             <div class="module-card">
                 <div class="card-head">
-                    <h3>System Analytics</h3>
+                    <h3>View Report</h3>
                 </div>
                 <p>View comprehensive data reports on customer loyalty points, reward redemptions, and member activity.</p>
                 <a href="/admin/generate-report">

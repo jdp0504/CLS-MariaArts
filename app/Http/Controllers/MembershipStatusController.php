@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Reward;
+use App\Models\Redemption;
 
 class MembershipStatusController extends Controller
 {
@@ -12,7 +14,14 @@ class MembershipStatusController extends Controller
         if (session('role') !== 'admin') {
             return redirect('/my-login')->with('error', 'Please log in to access the dashboard.');
         }
-        return view('admin-dashboard');
+
+        $totalMembers = Customer::where('status', 'active')->count();
+        $activeRewards = Reward::where('status', 'active')->count();
+        $claimsThisMonth = Redemption::whereMonth('redeemedDate', now()->month)
+                                      ->whereYear('redeemedDate', now()->year)
+                                      ->count();
+
+        return view('admin-dashboard', compact('totalMembers', 'activeRewards', 'claimsThisMonth'));
     }
 
     public function manageMembership(Request $request)

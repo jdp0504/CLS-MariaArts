@@ -16,6 +16,9 @@ Route::get('/', [LoginController::class, 'showForm']);
 Route::get('/my-login', [LoginController::class, 'showForm']);
 Route::post('/my-login', [LoginController::class, 'processLogin']);
 Route::post('/logout', [LoginController::class, 'logout']);
+Route::get('/forgot-password', function () {
+    return view('forgot-password');
+});
 
 // ─── Registration ───
 Route::get('/register', [RegisterController::class, 'showRegisterForm']);
@@ -50,6 +53,10 @@ Route::prefix('admin')->group(function () {
 // ─── Cashier operations ───
 Route::prefix('cashier')->group(function () {
     Route::get('/manage-points', [LoyaltyPointController::class, 'managePoints']);
+    Route::post('/manage-points/search', [LoyaltyPointController::class, 'searchCustomer']);
+    Route::get('/manage-points/step/{step}', [LoyaltyPointController::class, 'setStep']);
+    Route::get('/manage-points/back', [LoyaltyPointController::class, 'goBack']);
     Route::post('/manage-points/add', [LoyaltyPointController::class, 'addPoints']);
     Route::post('/manage-points/redeem', [LoyaltyPointController::class, 'redeemPoints']);
+    Route::post('/manage-points/reset-password', [LoyaltyPointController::class, 'resetPassword']);
 });

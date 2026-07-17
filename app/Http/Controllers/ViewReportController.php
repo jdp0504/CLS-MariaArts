@@ -166,7 +166,11 @@ class ViewReportController extends Controller
                     $j->on('Customer.customerID', '=', 'PurchaseTransaction.customerID')
                       ->whereBetween('PurchaseTransaction.transactionDate', [$fromDate, $toDate]);
                 })
-                ->selectRaw('Customer.customerID, Customer.customerName, Customer.email, COALESCE(SUM(PurchaseTransaction.pointEarned), 0) as points')
+                ->leftJoin('Referral', function ($j) use ($fromDate, $toDate) {
+                    $j->on('Customer.customerID', '=', 'Referral.customerID')
+                      ->whereBetween('Referral.dateRef', [$fromDate, $toDate]);
+                })
+                ->selectRaw('Customer.customerID, Customer.customerName, Customer.email, COALESCE(SUM(PurchaseTransaction.pointEarned), 0) + COALESCE(SUM(Referral.pointGranted), 0) as points')
                 ->where('Customer.status', 'active')
                 ->when($custId !== 'all', fn($q) => $q->where('Customer.customerID', $custId))
                 ->groupBy('Customer.customerID', 'Customer.customerName', 'Customer.email')

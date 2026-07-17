@@ -116,6 +116,9 @@ class GenerateNotificationController extends Controller
             return redirect('/admin/generate-notification')->with('error', $attachmentResult['error']);
         }
         $attachmentPath = $attachmentResult['path'];
+        if (!$attachmentPath && $request->input('existing_attachment')) {
+            $attachmentPath = $request->input('existing_attachment');
+        }
 
         $adminID = session('user_id');
 

@@ -10,22 +10,59 @@
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         :root {
-            --bg:#f0f2f8; --surface:#fff; --text-primary:#0b1120; --text-secondary:#5a6a85; --text-tertiary:#94a3b8;
-            --brand:#f59e0b; --brand-light:#fbbf24; --brand-subtle:#fef3c7;
-            --accent-green:#059669; --accent-green-bg:#d1fae5;
-            --accent-red:#dc2626; --accent-red-bg:#fee2e2;
-            --border:#e9edf4; --radius-sm:8px; --radius-md:12px;
+            --bg: #f4f7fa; --surface: #ffffff; --surface-alt: #f8fafc;
+            --text-primary: #0f172a; --text-secondary: #475569; --text-tertiary: #94a3b8;
+            --brand: #f59e0b; --brand-light: #fbbf24; --brand-subtle: #fef3c7;
+            --accent-green: #059669; --accent-green-bg: #d1fae5;
+            --accent-red: #dc2626; --accent-red-bg: #fee2e2;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.04);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.05);
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 18px;
         }
-        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-primary); min-height:100vh; -webkit-font-smoothing:antialiased; }
-        nav { background:var(--surface); border-bottom:1px solid var(--border); padding:0 2rem; height:64px; display:flex; align-items:center; justify-content:space-between; }
-        nav .brand { font-weight:700; font-size:1rem; }
-        nav .nav-right { display:flex; align-items:center; gap:1rem; }
-        .role-badge { background:var(--brand-subtle); color:#92400e; padding:0.35rem 0.9rem; border-radius:9999px; font-size:0.8rem; font-weight:600; }
-        .logout-btn { background:transparent; border:1px solid var(--border); color:var(--text-secondary); padding:0.45rem 1rem; font-weight:600; font-size:0.8rem; border-radius:6px; cursor:pointer; font-family:inherit; transition:all .2s; }
-        .logout-btn:hover { background:var(--accent-red-bg); color:var(--accent-red); border-color:var(--accent-red); }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg); color: var(--text-primary);
+            min-height: 100vh; -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            background: rgba(255,255,255,0.85); border-bottom: 1px solid var(--border);
+            padding: 0 2rem; height: 68px; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 50;
+            backdrop-filter: blur(12px);
+        }
+        nav .nav-left { display: flex; align-items: center; gap: 16px; }
+        nav .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; color: var(--text-primary); letter-spacing: -0.01em; }
+        nav .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--brand); display: inline-block; flex-shrink: 0; }
+        nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: transparent; border: 1px solid var(--border);
+            color: var(--text-secondary); padding: 0.5rem 1.1rem; font-weight: 600;
+            font-size: 0.8rem; border-radius: var(--radius-sm); cursor: pointer;
+            text-decoration: none; transition: all 0.2s; font-family: inherit;
+        }
+        .back-btn:hover { background: var(--brand-subtle); color: var(--brand); border-color: var(--brand); }
+        .status-badge {
+            display: flex; align-items: center; gap: 6px;
+            background: var(--brand-subtle); color: #92400e;
+            padding: 0.4rem 1rem; border-radius: 9999px;
+            font-size: 0.8rem; font-weight: 600; letter-spacing: 0.01em;
+        }
+        .status-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); display: inline-block; animation: pulse-dot 2s ease-in-out infinite; }
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .logout-btn {
+            background: transparent; border: 1px solid var(--border);
+            color: var(--text-secondary); padding: 0.5rem 1.1rem;
+            font-weight: 600; font-size: 0.8rem; border-radius: var(--radius-sm);
+            cursor: pointer; transition: all 0.2s; font-family: inherit;
+        }
+        .logout-btn:hover { background: var(--accent-red-bg); color: var(--accent-red); border-color: var(--accent-red); }
+
         .container { max-width:860px; margin:2.5rem auto; padding:0 1.5rem; }
-        .back-link { display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary); text-decoration:none; font-size:0.85rem; font-weight:600; margin-bottom:1.5rem; }
-        .back-link:hover { color:var(--text-primary); }
 
         .points-hero { background:linear-gradient(135deg,#f59e0b,#fbbf24); border-radius:var(--radius-md); padding:2rem; margin-bottom:1.5rem; color:#fff; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
         .points-hero .pts-label { font-size:0.85rem; font-weight:600; opacity:0.85; text-transform:uppercase; letter-spacing:0.04em; }
@@ -50,25 +87,35 @@
 
         .history-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; }
         table { width:100%; border-collapse:collapse; }
-        thead { background:#f8fafc; }
+        thead { background:var(--surface-alt); }
         th { text-align:left; padding:0.75rem 1rem; font-size:0.75rem; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.04em; border-bottom:1px solid var(--border); }
         td { padding:0.75rem 1rem; font-size:0.85rem; border-bottom:1px solid var(--border); }
         tr:last-child td { border-bottom:none; }
         .empty { text-align:center; padding:2rem; color:var(--text-tertiary); font-size:0.85rem; }
 
-        @media (max-width:640px) { .points-hero { flex-direction:column; text-align:center; } .points-hero .pts-stats { justify-content:center; } }
+        @media (max-width:720px) {
+            .points-hero { flex-direction:column; text-align:center; }
+            .points-hero .pts-stats { justify-content:center; }
+            nav { padding: 0 1rem; }
+            .status-badge { display: none; }
+        }
     </style>
 </head>
 <body>
     <nav>
-        <div class="brand">Syarikat Perniagaan Maria Arts</div>
+        <div class="nav-left">
+            <a href="/customer-dashboard" class="back-btn">&larr; Dashboard</a>
+            <div class="brand"><span class="brand-dot"></span>Syarikat Perniagaan Maria Arts</div>
+        </div>
         <div class="nav-right">
-            <span class="role-badge">Customer</span>
-            <form method="POST" action="/logout">@csrf<button type="submit" class="logout-btn">Log Out</button></form>
+            <div class="status-badge"><span class="dot"></span>{{ session('username') }} · Customer</div>
+            <form method="POST" action="/logout">
+                @csrf
+                <button type="submit" class="logout-btn">Log Out</button>
+            </form>
         </div>
     </nav>
     <div class="container">
-        <a href="/customer-dashboard" class="back-link">&larr; Back to Dashboard</a>
 
         <div class="points-hero">
             <div>

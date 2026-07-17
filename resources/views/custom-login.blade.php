@@ -362,6 +362,10 @@
             <button type="submit" id="loginBtn">Sign In</button>
         </form>
 
+        <div class="form-footer" style="margin-top:1rem;">
+            <a href="/forgot-password" style="color:var(--brand);font-size:0.8rem;">Forgot Password?</a>
+        </div>
+
         <div class="form-footer">
             Not a member? <a href="/register">Join Loyalty Program</a>
         </div>

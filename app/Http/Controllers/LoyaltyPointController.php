@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Customer;
 use App\Models\PurchaseTransaction;
 use App\Models\Redemption;
 use App\Models\Reward;
+use App\Models\LoyaltyUser;
 
 class LoyaltyPointController extends Controller
 {
@@ -28,25 +30,101 @@ class LoyaltyPointController extends Controller
     public function managePoints()
     {
         $this->checkAccess();
+
+        $customer = null;
+        if (session('cashier_customer_id')) {
+            $customer = Customer::where('customerID', session('cashier_customer_id'))
+                ->whereNull('archivedAt')
+                ->first();
+            if (!$customer) {
+                session()->forget(['cashier_customer_id', 'cashier_step']);
+            }
+        }
+
+        $step = session('cashier_step', null);
         $rewards = Reward::where('status', 'active')->where('stock', '>', 0)->get();
-        return view('cashier.manage-points', compact('rewards'));
+
+        return view('cashier.manage-points', compact('customer', 'step', 'rewards'));
+    }
+
+    public function searchCustomer(Request $request)
+    {
+        $this->checkAccess();
+
+        $request->validate([
+            'search' => 'required|string',
+        ]);
+
+        $search = $request->search;
+
+        $customer = Customer::where(function ($query) use ($search) {
+                $query->where('phoneNumber', $search)
+                      ->orWhere('email', $search);
+            })
+            ->whereNull('archivedAt')
+            ->first();
+
+        if (!$customer) {
+            return back()->with('error', 'Customer not found. Please check the phone number or email.');
+        }
+
+        session([
+            'cashier_customer_id' => $customer->customerID,
+            'cashier_step' => null,
+        ]);
+
+        return redirect('/cashier/manage-points');
+    }
+
+    public function setStep($step)
+    {
+        $this->checkAccess();
+
+        if (!in_array($step, ['add', 'redeem', 'reset'])) {
+            return redirect('/cashier/manage-points');
+        }
+
+        if (!session('cashier_customer_id')) {
+            return redirect('/cashier/manage-points');
+        }
+
+        session(['cashier_step' => $step]);
+
+        return redirect('/cashier/manage-points');
+    }
+
+    public function goBack()
+    {
+        $this->checkAccess();
+
+        if (session('cashier_step')) {
+            session()->forget('cashier_step');
+        } else {
+            session()->forget(['cashier_customer_id', 'cashier_step']);
+        }
+
+        return redirect('/cashier/manage-points');
     }
 
     public function addPoints(Request $request)
     {
         $this->checkAccess();
 
+        if (!session('cashier_customer_id')) {
+            return redirect('/cashier/manage-points');
+        }
+
         $request->validate([
-            'customerID'  => 'required|string|exists:Customer,customerID',
-            'totalPrice'  => 'required|numeric|min:0.01',
+            'totalPrice' => 'required|numeric|min:0.01',
         ]);
 
-        $customer = Customer::where('customerID', $request->customerID)
+        $customer = Customer::where('customerID', session('cashier_customer_id'))
             ->whereNull('archivedAt')
             ->first();
 
         if (!$customer) {
-            return back()->with('error', 'Customer not found or inactive. Please check the Customer ID.');
+            session()->forget(['cashier_customer_id', 'cashier_step']);
+            return redirect('/cashier/manage-points')->with('error', 'Customer not found or inactive.');
         }
 
         $pointEarned = (int) floor($request->totalPrice);
@@ -66,6 +144,8 @@ class LoyaltyPointController extends Controller
 
         $customer->increment('currentPoints', $pointEarned);
 
+        session()->forget('cashier_step');
+
         return redirect('/cashier/manage-points')
             ->with('success', "$pointEarned points added to {$customer->customerName}. Transaction: $transactionID");
     }
@@ -74,17 +154,21 @@ class LoyaltyPointController extends Controller
     {
         $this->checkAccess();
 
+        if (!session('cashier_customer_id')) {
+            return redirect('/cashier/manage-points');
+        }
+
         $request->validate([
-            'customerID' => 'required|string|exists:Customer,customerID',
-            'rewardID'   => 'required|string|exists:Reward,rewardID',
+            'rewardID' => 'required|string|exists:Reward,rewardID',
         ]);
 
-        $customer = Customer::where('customerID', $request->customerID)
+        $customer = Customer::where('customerID', session('cashier_customer_id'))
             ->whereNull('archivedAt')
             ->first();
 
         if (!$customer) {
-            return back()->with('error', 'Customer not found or inactive. Please check the Customer ID.');
+            session()->forget(['cashier_customer_id', 'cashier_step']);
+            return redirect('/cashier/manage-points')->with('error', 'Customer not found or inactive.');
         }
 
         $reward = Reward::findOrFail($request->rewardID);
@@ -111,7 +195,48 @@ class LoyaltyPointController extends Controller
         $customer->decrement('currentPoints', $reward->pointRequired);
         $reward->decrement('stock');
 
+        session()->forget('cashier_step');
+
         return redirect('/cashier/manage-points')
             ->with('success', "{$customer->customerName} redeemed {$reward->rewardName}. Redemption: $redemptionID");
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $this->checkAccess();
+
+        if (!session('cashier_customer_id')) {
+            return redirect('/cashier/manage-points');
+        }
+
+        $request->validate([
+            'newPassword' => 'required|string|min:4',
+        ]);
+
+        $customer = Customer::where('customerID', session('cashier_customer_id'))
+            ->whereNull('archivedAt')
+            ->first();
+
+        if (!$customer) {
+            session()->forget(['cashier_customer_id', 'cashier_step']);
+            return redirect('/cashier/manage-points')->with('error', 'Customer not found or inactive.');
+        }
+
+        $user = LoyaltyUser::where('userID', $customer->customerID)->first();
+
+        if (!$user) {
+            return back()->with('error', 'User account not found for this customer.');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->newPassword),
+        ]);
+
+        session()->forget('cashier_step');
+
+        $cashierName = session('username');
+
+        return redirect('/cashier/manage-points')
+            ->with('success', "Password for {$customer->customerName} has been reset by {$cashierName}.");
     }
 }
