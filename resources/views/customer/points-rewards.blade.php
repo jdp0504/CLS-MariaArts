@@ -85,6 +85,11 @@
         .elig-yes { background:var(--accent-green-bg); color:var(--accent-green); }
         .elig-no { background:#f1f5f9; color:var(--text-tertiary); }
 
+        .redeem-note { display:flex; align-items:flex-start; gap:12px; background:#f0f9ff; border:1px solid #bae6fd; border-radius:var(--radius-md); padding:1.25rem 1.5rem; margin-bottom:2rem; }
+        .redeem-note .note-icon { width:28px; height:28px; background:#e0f2fe; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; color:#0369a1; flex-shrink:0; }
+        .redeem-note strong { font-size:0.9rem; color:#0369a1; display:block; margin-bottom:0.25rem; }
+        .redeem-note p { font-size:0.85rem; color:var(--text-secondary); line-height:1.55; margin:0; }
+
         .history-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; }
         table { width:100%; border-collapse:collapse; }
         thead { background:var(--surface-alt); }
@@ -144,6 +149,14 @@
             @empty
                 <div class="reward-card" style="grid-column:1/-1;text-align:center;color:var(--text-tertiary);">No rewards available at this time.</div>
             @endforelse
+        </div>
+
+        <div class="redeem-note">
+            <div class="note-icon">i</div>
+            <div>
+                <strong>How to Redeem a Reward</strong>
+                <p>To redeem a reward, visit the store and ask the cashier to process your redemption using your phone number or email.</p>
+            </div>
         </div>
 
         <div class="section-title">Redemption History</div>
