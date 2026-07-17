@@ -19,6 +19,7 @@ class LoyaltyUserSeeder extends Seeder
             ['userID' => 'CSH002', 'username' => 'cashier2',  'role' => 'cashier',  'createdDate' => $now, 'password' => Hash::make('cashier123')],
             ['userID' => 'CUS001', 'username' => 'customer1', 'role' => 'customer', 'createdDate' => $now, 'password' => Hash::make('pass123')],
             ['userID' => 'CUS002', 'username' => 'customer2', 'role' => 'customer', 'createdDate' => $now, 'password' => Hash::make('pass123')],
+            ['userID' => 'CUS003', 'username' => 'customer3', 'role' => 'customer', 'createdDate' => $now, 'password' => Hash::make('pass123')],
         ];
         DB::table('User')->insert($users);
 
@@ -56,6 +57,17 @@ class LoyaltyUserSeeder extends Seeder
                 'email'         => 'bob@email.com',
                 'status'        => 'active',
                 'archivedAt'    => null,
+            ],
+            [
+                'customerID'    => 'CUS003',
+                'customerName'  => 'Chong Wei',
+                'birthDate'     => '1988-03-20',
+                'phoneNumber'   => '013-5551234',
+                'referralCode'  => 'CHONG03',
+                'currentPoints' => 0,
+                'email'         => 'chong@email.com',
+                'status'        => 'inactive',
+                'archivedAt'    => $now,
             ],
         ]);
 

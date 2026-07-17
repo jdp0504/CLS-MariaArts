@@ -214,6 +214,12 @@
             color: var(--text-tertiary);
         }
 
+        .stat-box span.sub {
+            font-size: 0.78rem;
+            color: #ef4444;
+            margin-top: 0.25rem;
+        }
+
         /* ─── MODULES GRID ─── */
         .modules-grid {
             display: grid;
@@ -351,6 +357,7 @@
             <div class="stat-box">
                 <span class="label">Active Users</span>
                 <span class="value">{{ $totalMembers }}</span>
+                <span class="sub">Inactive: {{ $inactiveMembers }}</span>
             </div>
             <div class="stat-box">
                 <span class="label">Active Rewards</span>

@@ -16,12 +16,13 @@ class MembershipStatusController extends Controller
         }
 
         $totalMembers = Customer::where('status', 'active')->count();
+        $inactiveMembers = Customer::where('status', 'inactive')->count();
         $activeRewards = Reward::where('status', 'active')->count();
         $claimsThisMonth = Redemption::whereMonth('redeemedDate', now()->month)
                                       ->whereYear('redeemedDate', now()->year)
                                       ->count();
 
-        return view('admin-dashboard', compact('totalMembers', 'activeRewards', 'claimsThisMonth'));
+        return view('admin-dashboard', compact('totalMembers', 'inactiveMembers', 'activeRewards', 'claimsThisMonth'));
     }
 
     public function manageMembership(Request $request)
