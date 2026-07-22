@@ -59,8 +59,8 @@
             max-width: 440px;
             text-align: center;
             background: rgba(37,99,235,0.15);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             border: 1px solid rgba(37,99,235,0.25);
             border-radius: 16px;
             padding: 2.5rem 2rem;
