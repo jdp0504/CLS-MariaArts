@@ -25,14 +25,13 @@
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
+            background: #1a1a2e;
             -webkit-font-smoothing: antialiased;
-            background: #f8fafc;
         }
 
         .brand-panel {
             flex: 1;
-            background: url('/img/MariaArts.png') center/cover no-repeat;
-            background-color: #1a1a2e;
+            background: #1a1a2e url('/img/MariaArts.png') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;

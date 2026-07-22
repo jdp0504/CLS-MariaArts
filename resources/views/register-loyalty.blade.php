@@ -16,14 +16,13 @@
             --border: #e9edf4; --danger-bg: #fee2e2; --radius: 8px;
         }
         body {
-            font-family: 'Inter', sans-serif; background: #f8fafc;
+            font-family: 'Inter', sans-serif; background: #1a1a2e;
             color: var(--text-primary); min-height: 100vh;
             display: flex; -webkit-font-smoothing: antialiased;
         }
         .brand-panel {
             flex: 1;
-            background: url('/img/MariaArts.png') center/cover no-repeat;
-            background-color: #1a1a2e;
+            background: #1a1a2e url('/img/MariaArts.png') center/cover no-repeat;
             display: flex; flex-direction: column; justify-content: center;
             align-items: center; padding: 3rem; position: relative; overflow: hidden;
         }
