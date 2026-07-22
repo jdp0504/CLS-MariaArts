@@ -223,7 +223,6 @@
 
         {{-- ══════ STEP 2: Action selection ══════ --}}
         @elseif (!$step)
-            <a href="/cashier/manage-points/back" class="step-link">&larr;</a>
             <div class="customer-info">
                 <div>
                     <div class="name">
