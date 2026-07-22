@@ -56,6 +56,15 @@
 
         .container { max-width: 560px; margin: 2.5rem auto; padding: 0 1.5rem; }
 
+        .step-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem;
+            padding: 0.5rem 1.1rem; border: 1.5px solid #94a3b8;
+            border-radius: var(--radius-sm); transition: all 0.2s;
+        }
+        .step-link:hover { color: var(--brand); border-color: var(--brand); }
+
         .card {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: var(--radius-md); padding: 2rem;
@@ -213,6 +222,7 @@
 
         {{-- ══════ STEP 2: Action selection ══════ --}}
         @elseif (!$step)
+            <a href="/cashier/manage-points/back" class="step-link">&larr; New Search</a>
             <div class="customer-info">
                 <div>
                     <div class="name">
@@ -241,6 +251,7 @@
 
         {{-- ══════ STEP 3A: Add Points ══════ --}}
         @elseif ($step === 'add')
+            <a href="/cashier/manage-points/back" class="step-link">&larr; Back to Actions</a>
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
@@ -266,6 +277,7 @@
 
         {{-- ══════ STEP 3B: Redeem Reward ══════ --}}
         @elseif ($step === 'redeem')
+            <a href="/cashier/manage-points/back" class="step-link">&larr; Back to Actions</a>
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
@@ -305,6 +317,7 @@
 
         {{-- ══════ STEP 3C: Reset Password ══════ --}}
         @elseif ($step === 'reset')
+            <a href="/cashier/manage-points/back" class="step-link">&larr; Back to Actions</a>
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
