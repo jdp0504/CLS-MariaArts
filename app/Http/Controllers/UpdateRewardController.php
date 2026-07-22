@@ -91,7 +91,7 @@ class UpdateRewardController extends Controller
             'rewardName'     => $request->rewardName,
             'description'    => $request->description,
             'pointRequired'  => $request->pointRequired,
-            'stock'          => $request->stock,
+            'stock'          => $reward->stock + $request->stock,
             'status'         => $request->status,
         ]);
 

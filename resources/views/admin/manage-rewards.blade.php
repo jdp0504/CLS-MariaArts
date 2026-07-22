@@ -36,6 +36,7 @@
         .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--brand); }
         .field textarea { resize: vertical; min-height: 60px; }
         .field .field-error { font-size: 0.75rem; color: var(--accent-red); font-weight: 500; }
+        .field .field-hint { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.15rem; }
         .btn { padding: 0.6rem 1.25rem; border: none; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.85rem; font-family: inherit; cursor: pointer; transition: background .2s; }
         .btn-primary { background: var(--brand); color: #fff; }
         .btn-primary:hover { background: var(--brand-light); }
@@ -133,7 +134,8 @@
                         <input type="number" name="pointRequired" id="pointRequired" min="1" value="{{ old('pointRequired', $editReward->pointRequired ?? '') }}" required>
                     </div>
                     <div class="field">
-                        <label>Stock Quantity</label>
+                        <label id="stockLabel">Stock Quantity</label>
+                        <p class="field-hint hidden" id="stockHint"></p>
                         <input type="number" name="stock" id="stock" min="0" value="{{ old('stock', $editReward->stock ?? '') }}" required>
                     </div>
                 </div>
@@ -214,6 +216,9 @@
             document.getElementById('rewardDesc').value = '';
             document.getElementById('pointRequired').value = '';
             document.getElementById('stock').value = '';
+            document.getElementById('stock').min = 0;
+            document.getElementById('stockLabel').textContent = 'Stock Quantity';
+            document.getElementById('stockHint').classList.add('hidden');
             document.getElementById('rewardStatus').value = 'active';
         }
 
@@ -231,7 +236,11 @@
             document.getElementById('rewardName').value = name;
             document.getElementById('rewardDesc').value = desc;
             document.getElementById('pointRequired').value = points;
-            document.getElementById('stock').value = stock;
+            document.getElementById('stock').value = '';
+            document.getElementById('stock').min = 1;
+            document.getElementById('stockLabel').textContent = 'Add Stock';
+            document.getElementById('stockHint').textContent = 'Current stock: ' + stock;
+            document.getElementById('stockHint').classList.remove('hidden');
             document.getElementById('rewardStatus').value = status;
             document.getElementById('formTitle').textContent = 'Edit Reward';
             document.getElementById('formSub').textContent = 'Update the reward details below.';

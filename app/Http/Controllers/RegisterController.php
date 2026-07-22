@@ -76,11 +76,14 @@ class RegisterController extends Controller
             Referral::create([
                 'referralID'   => $referralID,
                 'customerID'   => $referrer->customerID,
-                'pointGranted' => 50,
+                'pointGranted' => 5,
                 'dateRef'      => now()->toDateString(),
             ]);
 
-            $referrer->increment('currentPoints', 50);
+            $referrer->increment('currentPoints', 5);
+
+            $newCustomer = Customer::find($customerID);
+            $newCustomer->increment('currentPoints', 5);
         }
 
         return redirect('/registration-success')->with([
