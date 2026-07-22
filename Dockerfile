@@ -1,14 +1,16 @@
 FROM php:8.3-cli
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip \
-    libpng-dev libxml2-dev libsqlite3-dev libzip-dev \
-    && docker-php-ext-install pdo_sqlite mbstring exif pcntl bcmath gd intl zip \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    git curl zip unzip libsqlite3-dev libxml2-dev libzip-dev libpng-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-install pdo_sqlite mbstring bcmath zip intl
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
 
@@ -19,11 +21,9 @@ COPY . .
 
 RUN npm install && npm run build
 
-RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
-
-EXPOSE 8000
-
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
+
+EXPOSE 8000
 
 CMD ["start.sh"]
