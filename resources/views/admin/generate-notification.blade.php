@@ -215,6 +215,7 @@
                     <div class="tag-toolbar">
                         <span class="tt-label">Insert:</span>
                         <button type="button" class="tag-btn" onclick="insertTag('{name}')">Name</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{firstName}')">First Name</button>
                         <button type="button" class="tag-btn" onclick="insertTag('{phone}')">Phone</button>
                         <button type="button" class="tag-btn" onclick="insertTag('{points}')">Points</button>
                         <button type="button" class="tag-btn" onclick="insertTag('{referralCode}')">Referral</button>
@@ -266,6 +267,7 @@
                                value="{{ $c->customerID }}"
                                {{ $isPreSelected ? 'checked' : '' }}
                                data-name="{{ $c->customerName }}"
+                               data-firstname="{{ explode(' ', $c->customerName)[0] }}"
                                data-phone="{{ $c->phoneNumber ?? 'N/A' }}"
                                data-points="{{ $c->currentPoints ?? 0 }}"
                                data-ref="{{ $c->referralCode ?? 'N/A' }}"
@@ -430,6 +432,7 @@
         function replaceTags(text, data) {
             return text
                 .replace(/{name}/g, data.name)
+                .replace(/{firstName}/g, data.firstName)
                 .replace(/{phone}/g, data.phone)
                 .replace(/{points}/g, data.points)
                 .replace(/{referralCode}/g, data.ref)

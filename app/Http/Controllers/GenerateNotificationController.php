@@ -21,6 +21,7 @@ class GenerateNotificationController extends Controller
     {
         $map = [
             '{name}'         => $customer->customerName,
+            '{firstName}'    => explode(' ', $customer->customerName)[0],
             '{phone}'        => $customer->phoneNumber ?? 'N/A',
             '{points}'       => (string) ($customer->currentPoints ?? 0),
             '{referralCode}' => $customer->referralCode ?? 'N/A',
