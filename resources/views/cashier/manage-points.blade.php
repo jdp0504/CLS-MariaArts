@@ -222,7 +222,7 @@
 
         {{-- ══════ STEP 2: Action selection ══════ --}}
         @elseif (!$step)
-            <a href="/cashier/manage-points/back" class="step-link">&larr; New Search</a>
+            <a href="/cashier/manage-points/back" class="step-link">&larr;</a>
             <div class="customer-info">
                 <div>
                     <div class="name">
@@ -251,7 +251,7 @@
 
         {{-- ══════ STEP 3A: Add Points ══════ --}}
         @elseif ($step === 'add')
-            <a href="/cashier/manage-points/back" class="step-link">&larr; Back to Actions</a>
+            <a href="/cashier/manage-points/back" class="step-link">&larr;</a>
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
@@ -277,7 +277,7 @@
 
         {{-- ══════ STEP 3B: Redeem Reward ══════ --}}
         @elseif ($step === 'redeem')
-            <a href="/cashier/manage-points/back" class="step-link">&larr; Back to Actions</a>
+            <a href="/cashier/manage-points/back" class="step-link">&larr;</a>
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
@@ -317,7 +317,7 @@
 
         {{-- ══════ STEP 3C: Reset Password ══════ --}}
         @elseif ($step === 'reset')
-            <a href="/cashier/manage-points/back" class="step-link">&larr; Back to Actions</a>
+            <a href="/cashier/manage-points/back" class="step-link">&larr;</a>
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
