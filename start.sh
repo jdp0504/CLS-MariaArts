@@ -7,6 +7,10 @@ mkdir -p storage/logs
 mkdir -p bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 
+if [ ! -f .env ] || [ ! -s .env ]; then
+    cp .env.example .env
+fi
+
 php artisan key:generate --force
 
 php artisan migrate --force
