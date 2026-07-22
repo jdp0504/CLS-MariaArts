@@ -68,9 +68,10 @@
             display: inline-flex; align-items: center; gap: 6px;
             color: var(--text-secondary); text-decoration: none;
             font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem;
-            transition: color 0.2s;
+            padding: 0.5rem 1.1rem; border: 1.5px solid #94a3b8;
+            border-radius: var(--radius-sm); transition: all 0.2s;
         }
-        .step-link:hover { color: var(--brand); }
+        .step-link:hover { color: var(--brand); border-color: var(--brand); }
 
         .card {
             background: var(--surface); border: 1px solid var(--border);
