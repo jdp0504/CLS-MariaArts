@@ -22,8 +22,8 @@
         }
         .brand-panel {
             flex: 1;
-            background-color: #1a1a2e;
             background: url('/img/MariaArts.png') center/cover no-repeat;
+            background-color: #1a1a2e;
             display: flex; flex-direction: column; justify-content: center;
             align-items: center; padding: 3rem; position: relative; overflow: hidden;
         }
