@@ -40,7 +40,7 @@
         nav .nav-right { display: flex; align-items: center; gap: 1rem; }
         .back-btn {
             display: inline-flex; align-items: center; gap: 6px;
-            background: transparent; border: 1px solid var(--border);
+            background: transparent; border: 1.5px solid #94a3b8;
             color: var(--text-secondary); padding: 0.5rem 1.1rem; font-weight: 600;
             font-size: 0.8rem; border-radius: var(--radius-sm); cursor: pointer;
             text-decoration: none; transition: all 0.2s; font-family: inherit;
