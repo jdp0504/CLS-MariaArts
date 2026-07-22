@@ -34,9 +34,9 @@
         .brand-panel::after { content: none; }
         .brand-content {
             position: relative; z-index: 1; max-width: 440px; text-align: center;
-            background: rgba(255,255,255,0.15);
+            background: rgba(37,99,235,0.15);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 16px;
+            border: 1px solid rgba(37,99,235,0.25); border-radius: 16px;
             padding: 2.5rem 2rem;
         }
         .brand-icon {
