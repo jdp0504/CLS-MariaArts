@@ -207,6 +207,7 @@
 
         {{-- ══════ STEP 1: Search by phone ══════ --}}
         @if (!$customer)
+            <a href="/cashier-dashboard" class="step-link">&larr;</a>
             <div class="card">
                 <h2>Search Customer</h2>
                 <p class="subtitle">Enter the customer's phone number to search for their account.</p>
