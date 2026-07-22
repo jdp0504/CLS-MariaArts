@@ -7,10 +7,6 @@ mkdir -p storage/logs
 mkdir -p bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 
-cp -n .env.example .env 2>/dev/null || true
-
-php artisan key:generate --force
-
 php artisan migrate --force
 
 php artisan db:seed --force || true

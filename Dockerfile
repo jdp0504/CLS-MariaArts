@@ -1,7 +1,7 @@
 FROM php:8.4-cli
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip \
+    git curl zip unzip libssl-dev \
     libpng-dev libxml2-dev libsqlite3-dev libzip-dev libonig-dev libicu-dev \
     && rm -rf /var/lib/apt/lists/*
 
@@ -21,6 +21,8 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 COPY . .
 
 RUN composer dump-autoload
+
+RUN cp .env.example .env && php artisan key:generate --force
 
 RUN npm install && npm run build
 
