@@ -7,6 +7,8 @@ mkdir -p storage/logs
 mkdir -p bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 
+php artisan key:generate --force
+
 php artisan migrate --force
 
 php artisan db:seed --force || true
