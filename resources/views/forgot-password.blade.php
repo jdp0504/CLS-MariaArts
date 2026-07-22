@@ -30,7 +30,7 @@
 
         .brand-panel {
             flex: 1;
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+            background: url('/img/MariaArts.png') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -43,23 +43,12 @@
         .brand-panel::before {
             content: '';
             position: absolute;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.04);
-            top: -200px;
-            right: -200px;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
         }
 
         .brand-panel::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.03);
-            bottom: -100px;
-            left: -100px;
+            content: none;
         }
 
         .brand-content {
@@ -67,6 +56,12 @@
             z-index: 1;
             max-width: 440px;
             text-align: center;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
         }
 
         .brand-icon {
