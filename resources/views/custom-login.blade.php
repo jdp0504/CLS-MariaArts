@@ -47,23 +47,12 @@
         .brand-panel::before {
             content: '';
             position: absolute;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.04);
-            top: -200px;
-            right: -200px;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
         }
 
         .brand-panel::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.03);
-            bottom: -100px;
-            left: -100px;
+            content: none;
         }
 
         .brand-content {
