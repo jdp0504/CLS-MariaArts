@@ -206,8 +206,7 @@
 
     <div class="brand-panel">
         <div class="brand-content">
-            <div class="brand-icon">M</div>
-            <h1>Maria Art's<br>Loyalty System</h1>
+            <h1>Maria Art's<br>Loyalty Programme</h1>
         </div>
     </div>
 

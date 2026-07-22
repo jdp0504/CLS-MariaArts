@@ -66,7 +66,7 @@
 <body>
     <div class="brand-panel">
         <div class="brand-content">
-            <h1>Maria Art's<br>Loyalty System</h1>
+            <h1>Maria Art's<br>Loyalty Programme</h1>
         </div>
     </div>
 

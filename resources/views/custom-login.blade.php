@@ -34,7 +34,7 @@
 
         .brand-panel {
             flex: 1;
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+            background: url('/img/Arts.jpg') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -317,7 +317,7 @@
 
     <div class="brand-panel">
         <div class="brand-content">
-            <h1>Maria Art's<br>Loyalty System</h1>
+            <h1>Maria Art's<br>Loyalty Programme</h1>
         </div>
     </div>
 
