@@ -57,15 +57,12 @@ class LoyaltyPointController extends Controller
 
         $search = $request->search;
 
-        $customer = Customer::where(function ($query) use ($search) {
-                $query->where('phoneNumber', $search)
-                      ->orWhere('email', $search);
-            })
+        $customer = Customer::where('phoneNumber', $search)
             ->whereNull('archivedAt')
             ->first();
 
         if (!$customer) {
-            return back()->with('error', 'Customer not found. Please check the phone number or email.');
+            return back()->with('error', 'Customer not found. Please check the phone number.');
         }
 
         session([

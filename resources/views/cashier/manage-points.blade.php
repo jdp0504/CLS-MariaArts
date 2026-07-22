@@ -204,16 +204,16 @@
             </div>
         @endif
 
-        {{-- ══════ STEP 1: Search by phone or email ══════ --}}
+        {{-- ══════ STEP 1: Search by phone ══════ --}}
         @if (!$customer)
             <div class="card">
                 <h2>Search Customer</h2>
-                <p class="subtitle">Enter the customer's phone number or email to search for their account.</p>
+                <p class="subtitle">Enter the customer's phone number to search for their account.</p>
                 <form method="POST" action="/cashier/manage-points/search">
                     @csrf
                     <div class="form-group">
-                        <label>Phone Number or Email</label>
-                        <input type="text" name="search" placeholder="e.g. 0123456789 or email@example.com" required autofocus>
+                        <label>Phone Number</label>
+                        <input type="text" name="search" placeholder="e.g. 0123456789" required autofocus>
                     </div>
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
