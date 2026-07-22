@@ -2,6 +2,11 @@
 
 touch database/database.sqlite
 
+mkdir -p storage/framework/{cache,sessions,views}
+mkdir -p storage/logs
+mkdir -p bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+
 php artisan migrate --force
 
 php artisan db:seed --force || true
