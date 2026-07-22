@@ -177,11 +177,15 @@
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 600;
-            transition: color 0.2s;
+            padding: 0.5rem 1.1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            transition: color 0.2s, border-color 0.2s;
         }
 
         .back-link:hover {
             color: var(--brand);
+            border-color: var(--brand);
         }
 
         @media (max-width: 860px) {
@@ -209,18 +213,18 @@
 
     <div class="form-panel">
         <h2>Forgot Password?</h2>
-        <p class="subtitle">No worries — visit the store and a cashier will help you reset your password.</p>
+        <p class="subtitle">Visit the store and a cashier will help you reset your password.</p>
 
         <div class="info-box">
             <h3>Contact the Cashier</h3>
             <p>Please visit the store in person and ask the cashier to reset your password. You will need to provide your username and verify your identity.</p>
             <div class="contact-item">
                 <span class="contact-icon">📍</span>
-                <span>Maria Art's — [Store Address]</span>
+                <span>Maria Art's — [5, Jalan Bunga Melur 2/18, Seksyen 2, 40000 Shah Alam, Selangor]</span>
             </div>
             <div class="contact-item" style="margin-top:0.5rem;">
                 <span class="contact-icon">📞</span>
-                <span>[Phone Number]</span>
+                <span>[+60 13-323 9131]</span>
             </div>
         </div>
 
