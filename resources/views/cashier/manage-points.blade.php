@@ -178,7 +178,7 @@
 <body>
     <nav>
         <div class="nav-left">
-            <a href="/cashier-dashboard" class="back-btn">&larr; Dashboard</a>
+            <a href="/cashier-dashboard" class="back-btn">&larr;</a>
             <div class="brand"><span class="brand-dot"></span>Syarikat Perniagaan Maria Arts</div>
         </div>
         <div class="nav-right">

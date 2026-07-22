@@ -80,7 +80,7 @@
     <nav>
         <div class="nav-left">
             @hasSection('showBack')
-                <a href="/admin-dashboard" class="back-btn">&larr; Dashboard</a>
+                <a href="/admin-dashboard" class="back-btn">&larr;</a>
             @endif
             <div class="brand"><span class="brand-dot"></span>Syarikat Perniagaan Maria Arts</div>
         </div>
