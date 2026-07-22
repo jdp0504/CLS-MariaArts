@@ -38,14 +38,6 @@
         nav .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; color: var(--text-primary); letter-spacing: -0.01em; }
         nav .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--brand); display: inline-block; flex-shrink: 0; }
         nav .nav-right { display: flex; align-items: center; gap: 1rem; }
-        .back-btn {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: transparent; border: 1.5px solid #94a3b8;
-            color: var(--text-secondary); padding: 0.5rem 1.1rem; font-weight: 600;
-            font-size: 0.8rem; border-radius: var(--radius-sm); cursor: pointer;
-            text-decoration: none; transition: all 0.2s; font-family: inherit;
-        }
-        .back-btn:hover { background: var(--brand-subtle); color: var(--brand); border-color: var(--brand); }
         .status-badge {
             display: flex; align-items: center; gap: 6px;
             background: var(--accent-green-bg); color: #065f46;
@@ -63,15 +55,6 @@
         .logout-btn:hover { background: var(--danger-bg); color: var(--danger); border-color: var(--danger); }
 
         .container { max-width: 560px; margin: 2.5rem auto; padding: 0 1.5rem; }
-
-        .step-link {
-            display: inline-flex; align-items: center; gap: 6px;
-            color: var(--text-secondary); text-decoration: none;
-            font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem;
-            padding: 0.5rem 1.1rem; border: 1.5px solid #94a3b8;
-            border-radius: var(--radius-sm); transition: all 0.2s;
-        }
-        .step-link:hover { color: var(--brand); border-color: var(--brand); }
 
         .card {
             background: var(--surface); border: 1px solid var(--border);
@@ -168,6 +151,15 @@
 
         .empty-msg { text-align: center; padding: 2rem; color: var(--text-tertiary); font-size: 0.85rem; }
 
+        .done-row { display: flex; justify-content: flex-end; margin-top: 1.5rem; }
+        .done-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--brand); color: #fff; text-decoration: none;
+            padding: 0.6rem 1.4rem; font-size: 0.85rem; font-weight: 600;
+            border-radius: var(--radius-sm); transition: background 0.2s;
+        }
+        .done-btn:hover { background: #059669; }
+
         @media (max-width: 600px) {
             .action-grid { grid-template-columns: 1fr; }
             nav { padding: 0 1rem; }
@@ -191,7 +183,6 @@
     </nav>
 
     <div class="container">
-        <a href="/cashier-dashboard" class="back-btn" style="margin-bottom:1.5rem;display:inline-flex;">&larr;</a>
         @if (session('success'))
             <div class="alert alert-success">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -222,7 +213,6 @@
 
         {{-- ══════ STEP 2: Action selection ══════ --}}
         @elseif (!$step)
-            <a href="/cashier/manage-points/back" class="step-link">&larr; New Search</a>
             <div class="customer-info">
                 <div>
                     <div class="name">
@@ -245,10 +235,12 @@
                     <span class="desc">Redeem for a reward</span>
                 </a>
             </div>
+            <div class="done-row">
+                <a href="/cashier/manage-points/done" class="done-btn">Done</a>
+            </div>
 
         {{-- ══════ STEP 3A: Add Points ══════ --}}
         @elseif ($step === 'add')
-            <a href="/cashier/manage-points/back" class="step-link">&larr; Back to Actions</a>
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
@@ -268,10 +260,12 @@
                     <button type="submit" class="btn btn-primary">Add Points</button>
                 </form>
             </div>
+            <div class="done-row">
+                <a href="/cashier/manage-points/done" class="done-btn">Done</a>
+            </div>
 
         {{-- ══════ STEP 3B: Redeem Reward ══════ --}}
         @elseif ($step === 'redeem')
-            <a href="/cashier/manage-points/back" class="step-link">&larr; Back to Actions</a>
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
@@ -305,10 +299,12 @@
                     <p class="empty-msg">No rewards available at this time.</p>
                 </div>
             @endif
+            <div class="done-row">
+                <a href="/cashier/manage-points/done" class="done-btn">Done</a>
+            </div>
 
         {{-- ══════ STEP 3C: Reset Password ══════ --}}
         @elseif ($step === 'reset')
-            <a href="/cashier/manage-points/back" class="step-link">&larr; Back to Actions</a>
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
@@ -327,6 +323,9 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Reset Password</button>
                 </form>
+            </div>
+            <div class="done-row">
+                <a href="/cashier/manage-points/done" class="done-btn">Done</a>
             </div>
         @endif
     </div>

@@ -56,6 +56,7 @@ Route::prefix('cashier')->group(function () {
     Route::post('/manage-points/search', [LoyaltyPointController::class, 'searchCustomer']);
     Route::get('/manage-points/step/{step}', [LoyaltyPointController::class, 'setStep']);
     Route::get('/manage-points/back', [LoyaltyPointController::class, 'goBack']);
+    Route::get('/manage-points/done', [LoyaltyPointController::class, 'done']);
     Route::post('/manage-points/add', [LoyaltyPointController::class, 'addPoints']);
     Route::post('/manage-points/redeem', [LoyaltyPointController::class, 'redeemPoints']);
     Route::post('/manage-points/reset-password', [LoyaltyPointController::class, 'resetPassword']);

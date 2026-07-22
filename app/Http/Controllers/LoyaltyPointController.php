@@ -103,6 +103,13 @@ class LoyaltyPointController extends Controller
         return redirect('/cashier/manage-points');
     }
 
+    public function done()
+    {
+        $this->checkAccess();
+        session()->forget(['cashier_customer_id', 'cashier_step']);
+        return redirect('/cashier/manage-points');
+    }
+
     public function addPoints(Request $request)
     {
         $this->checkAccess();
