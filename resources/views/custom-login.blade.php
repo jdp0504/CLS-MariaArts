@@ -34,7 +34,7 @@
 
         .brand-panel {
             flex: 1;
-            background: url('/img/Arts.jpg') center/cover no-repeat;
+            background: url('/img/MariaArts.jpeg') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
