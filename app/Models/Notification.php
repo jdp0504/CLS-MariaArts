@@ -8,8 +8,8 @@ class Notification extends Model
 {
     protected $table = 'Notification';
     protected $primaryKey = 'notificationID';
-    public $incrementing = true;
-    protected $keyType = 'int';
+    public $incrementing = false;
+    protected $keyType = 'string';
     public $timestamps = false;
 
     protected $fillable = [

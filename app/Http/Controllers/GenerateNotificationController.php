@@ -10,6 +10,13 @@ use App\Mail\NotificationMail;
 
 class GenerateNotificationController extends Controller
 {
+    private function generateNotifID(): string
+    {
+        $last = Notification::orderBy('notificationID', 'desc')->first();
+        $num = $last ? (int) substr($last->notificationID, 3) + 1 : 1;
+        return 'NOT' . str_pad($num, 3, '0', STR_PAD_LEFT);
+    }
+
     private function replaceTags($text, $customer)
     {
         $map = [
@@ -146,6 +153,7 @@ class GenerateNotificationController extends Controller
                 Notification::where('notificationID', $draftId)->update($data);
                 $msg = 'Draft updated successfully.';
             } else {
+                $data['notificationID'] = $this->generateNotifID();
                 Notification::create($data);
                 $msg = 'Draft saved successfully.';
             }
@@ -188,6 +196,7 @@ class GenerateNotificationController extends Controller
             }
 
             Notification::create([
+                'notificationID' => $this->generateNotifID(),
                 'adminID'        => $adminID,
                 'customerID'     => $customer->customerID,
                 'subject'        => $personalizedSub,

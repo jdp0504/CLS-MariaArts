@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('Notification', function (Blueprint $table) {
-            $table->id();
+            $table->string('notificationID', 50)->primary();
             $table->string('adminID', 50)->nullable()->index();
             $table->string('customerID', 50)->nullable()->index();
             $table->text('messageContent');
