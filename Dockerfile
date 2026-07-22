@@ -16,11 +16,16 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 WORKDIR /var/www/html
 
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 COPY . .
 
 RUN npm install && npm run build
+
+RUN mkdir -p storage/framework/{cache,sessions,views} \
+    && mkdir -p storage/logs \
+    && mkdir -p bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
 
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
