@@ -88,7 +88,6 @@
 <body>
     <nav>
         <div class="nav-left">
-            <a href="/customer-dashboard" class="back-btn">&larr;</a>
             <div class="brand"><span class="brand-dot"></span>Syarikat Perniagaan Maria Arts</div>
         </div>
         <div class="nav-right">
@@ -100,6 +99,7 @@
         </div>
     </nav>
     <div class="container">
+        <a href="/customer-dashboard" class="back-btn" style="margin-bottom:1.5rem;display:inline-flex;">&larr;</a>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif

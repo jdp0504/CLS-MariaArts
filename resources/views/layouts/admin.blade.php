@@ -79,9 +79,6 @@
 <body>
     <nav>
         <div class="nav-left">
-            @hasSection('showBack')
-                <a href="/admin-dashboard" class="back-btn">&larr;</a>
-            @endif
             <div class="brand"><span class="brand-dot"></span>Syarikat Perniagaan Maria Arts</div>
         </div>
         <div class="nav-right">
@@ -91,6 +88,9 @@
     </nav>
 
     <div class="container">
+        @hasSection('showBack')
+            <a href="/admin-dashboard" class="back-btn" style="margin-bottom:1.5rem;display:inline-flex;">&larr;</a>
+        @endif
         @yield('content')
     </div>
 </body>
