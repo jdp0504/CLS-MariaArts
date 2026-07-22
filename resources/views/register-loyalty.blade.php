@@ -66,9 +66,7 @@
 <body>
     <div class="brand-panel">
         <div class="brand-content">
-            <div class="brand-icon">M</div>
             <h1>Maria Art's<br>Loyalty System</h1>
-            <p>Earn points, redeem rewards, and enjoy exclusive benefits.</p>
         </div>
     </div>
 
