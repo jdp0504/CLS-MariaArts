@@ -35,6 +35,7 @@
 
         .brand-panel {
             flex: 1;
+            background-color: #1a1a2e;
             background: url('/img/MariaArts.png') center/cover no-repeat;
             display: flex;
             flex-direction: column;
