@@ -87,9 +87,10 @@ class RegisterController extends Controller
         }
 
         return redirect('/registration-success')->with([
-            'customerID'   => $customerID,
-            'customerName' => $request->customerName,
-            'referralCode' => $referralCode,
+            'customerID'    => $customerID,
+            'customerName'  => $request->customerName,
+            'referralCode'  => $referralCode,
+            'referralUsed'  => $request->filled('referral_code'),
         ]);
     }
 
