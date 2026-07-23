@@ -217,6 +217,7 @@
             document.getElementById('pointRequired').value = '';
             document.getElementById('stock').value = '';
             document.getElementById('stock').min = 0;
+            document.getElementById('stock').setAttribute('required', 'required');
             document.getElementById('stockLabel').textContent = 'Stock Quantity';
             document.getElementById('stockHint').classList.add('hidden');
             document.getElementById('rewardStatus').value = 'active';
@@ -237,7 +238,8 @@
             document.getElementById('rewardDesc').value = desc;
             document.getElementById('pointRequired').value = points;
             document.getElementById('stock').value = '';
-            document.getElementById('stock').min = 1;
+            document.getElementById('stock').min = 0;
+            document.getElementById('stock').removeAttribute('required');
             document.getElementById('stockLabel').textContent = 'Add Stock';
             document.getElementById('stockHint').textContent = 'Current stock: ' + stock;
             document.getElementById('stockHint').classList.remove('hidden');

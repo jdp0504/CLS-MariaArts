@@ -75,13 +75,12 @@ class UpdateRewardController extends Controller
             'rewardName'     => 'required|string|max:150',
             'description'    => 'nullable|string',
             'pointRequired'  => 'required|integer|min:1',
-            'stock'          => 'required|integer|min:0',
+            'stock'          => 'nullable|integer|min:0',
             'status'         => 'required|in:active,inactive',
         ], [
             'rewardName.required'    => 'Blank Fields',
             'pointRequired.required' => 'Blank Fields',
             'pointRequired.min'      => 'Invalid Input',
-            'stock.required'         => 'Blank Fields',
             'stock.min'              => 'Invalid Input',
             'status.required'        => 'Blank Fields',
         ]);
@@ -91,7 +90,7 @@ class UpdateRewardController extends Controller
             'rewardName'     => $request->rewardName,
             'description'    => $request->description,
             'pointRequired'  => $request->pointRequired,
-            'stock'          => $reward->stock + $request->stock,
+            'stock'          => $reward->stock + ($request->stock ?? 0),
             'status'         => $request->status,
         ]);
 
