@@ -207,6 +207,14 @@
 
                 <div class="field">
                     <label for="subject">Subject</label>
+                    <div class="tag-toolbar">
+                        <button type="button" class="tag-btn" onclick="insertTag('{name}', 'subjectInput')">Name</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{username}', 'subjectInput')">Username</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{phone}', 'subjectInput')">Phone</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{points}', 'subjectInput')">Points</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{referralCode}', 'subjectInput')">Referral</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{email}', 'subjectInput')">Email</button>
+                    </div>
                     <input type="text" name="subject" id="subjectInput" value="{{ old('subject', $loadDraft->subject ?? '') }}" placeholder="e.g. Happy Birthday {name}!" required>
                 </div>
 
@@ -214,12 +222,12 @@
                     <label for="messageContent">Message</label>
                     <div class="tag-toolbar">
                         <span class="tt-label">Insert:</span>
-                        <button type="button" class="tag-btn" onclick="insertTag('{name}')">Name</button>
-                        <button type="button" class="tag-btn" onclick="insertTag('{firstName}')">First Name</button>
-                        <button type="button" class="tag-btn" onclick="insertTag('{phone}')">Phone</button>
-                        <button type="button" class="tag-btn" onclick="insertTag('{points}')">Points</button>
-                        <button type="button" class="tag-btn" onclick="insertTag('{referralCode}')">Referral</button>
-                        <button type="button" class="tag-btn" onclick="insertTag('{email}')">Email</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{name}', 'messageBox')">Name</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{username}', 'messageBox')">Username</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{phone}', 'messageBox')">Phone</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{points}', 'messageBox')">Points</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{referralCode}', 'messageBox')">Referral</button>
+                        <button type="button" class="tag-btn" onclick="insertTag('{email}', 'messageBox')">Email</button>
                         <span class="tt-spacer"></span>
                         <button type="button" class="btn-clear" onclick="clearForm()">Clear All</button>
                     </div>
@@ -267,7 +275,7 @@
                                value="{{ $c->customerID }}"
                                {{ $isPreSelected ? 'checked' : '' }}
                                data-name="{{ $c->customerName }}"
-                               data-firstname="{{ explode(' ', $c->customerName)[0] }}"
+                               data-username="{{ $c->username ?? '' }}"
                                data-phone="{{ $c->phoneNumber ?? 'N/A' }}"
                                data-points="{{ $c->currentPoints ?? 0 }}"
                                data-ref="{{ $c->referralCode ?? 'N/A' }}"
@@ -332,8 +340,8 @@
         }
         toggleMonth();
 
-        function insertTag(tag) {
-            var mb = document.getElementById('messageBox');
+        function insertTag(tag, targetId) {
+            var mb = document.getElementById(targetId);
             var start = mb.selectionStart, end = mb.selectionEnd;
             mb.value = mb.value.substring(0, start) + tag + mb.value.substring(end);
             mb.focus(); mb.selectionStart = mb.selectionEnd = start + tag.length;
@@ -432,7 +440,7 @@
         function replaceTags(text, data) {
             return text
                 .replace(/{name}/g, data.name)
-                .replace(/{firstName}/g, data.firstName)
+                .replace(/{username}/g, data.username)
                 .replace(/{phone}/g, data.phone)
                 .replace(/{points}/g, data.points)
                 .replace(/{referralCode}/g, data.ref)

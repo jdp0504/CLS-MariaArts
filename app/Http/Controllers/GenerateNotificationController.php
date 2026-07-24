@@ -21,7 +21,7 @@ class GenerateNotificationController extends Controller
     {
         $map = [
             '{name}'         => $customer->customerName,
-            '{firstName}'    => explode(' ', $customer->customerName)[0],
+            '{username}'     => $customer->username ?? '',
             '{phone}'        => $customer->phoneNumber ?? 'N/A',
             '{points}'       => (string) ($customer->currentPoints ?? 0),
             '{referralCode}' => $customer->referralCode ?? 'N/A',
@@ -62,6 +62,8 @@ class GenerateNotificationController extends Controller
         $filterMonth = $request->input('filter_month', date('m'));
 
         $allCustomers = Customer::where('status', 'active')
+            ->leftJoin('User', 'User.userID', '=', 'Customer.customerID')
+            ->select('Customer.*', 'User.username')
             ->orderBy('customerName')
             ->get();
 

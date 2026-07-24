@@ -229,7 +229,7 @@
                         {{ $customer->customerName }}
                         <a href="/cashier/manage-points/step/reset" class="reset-link">Reset Password</a>
                     </div>
-                    <div class="meta">{{ $customer->customerID }} &middot; {{ $customer->phoneNumber }}</div>
+                    <div class="meta">{{ $user->username }} &middot; {{ $customer->referralCode }} &middot; {{ $customer->phoneNumber }}</div>
                 </div>
                 <div class="pts">{{ number_format($customer->currentPoints) }} pts</div>
             </div>
@@ -255,7 +255,7 @@
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
-                    <div class="meta">{{ $customer->customerID }}</div>
+                    <div class="meta">{{ $user->username }} &middot; {{ $customer->referralCode }}</div>
                 </div>
                 <div class="pts">{{ number_format($customer->currentPoints) }} pts</div>
             </div>
@@ -281,7 +281,7 @@
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
-                    <div class="meta">{{ $customer->customerID }}</div>
+                    <div class="meta">{{ $user->username }} &middot; {{ $customer->referralCode }}</div>
                 </div>
                 <div class="pts">{{ number_format($customer->currentPoints) }} pts</div>
             </div>
@@ -321,7 +321,7 @@
             <div class="customer-info">
                 <div>
                     <div class="name">{{ $customer->customerName }}</div>
-                    <div class="meta">{{ $customer->customerID }}</div>
+                    <div class="meta">{{ $user->username }} &middot; {{ $customer->referralCode }}</div>
                 </div>
                 <div class="pts">{{ number_format($customer->currentPoints) }} pts</div>
             </div>

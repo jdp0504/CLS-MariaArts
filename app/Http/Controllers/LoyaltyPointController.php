@@ -32,11 +32,14 @@ class LoyaltyPointController extends Controller
         $this->checkAccess();
 
         $customer = null;
+        $user = null;
         if (session('cashier_customer_id')) {
             $customer = Customer::where('customerID', session('cashier_customer_id'))
                 ->whereNull('archivedAt')
                 ->first();
-            if (!$customer) {
+            if ($customer) {
+                $user = LoyaltyUser::where('userID', $customer->customerID)->first();
+            } else {
                 session()->forget(['cashier_customer_id', 'cashier_step']);
             }
         }
@@ -44,7 +47,7 @@ class LoyaltyPointController extends Controller
         $step = session('cashier_step', null);
         $rewards = Reward::where('status', 'active')->where('stock', '>', 0)->get();
 
-        return view('cashier.manage-points', compact('customer', 'step', 'rewards'));
+        return view('cashier.manage-points', compact('customer', 'step', 'rewards', 'user'));
     }
 
     public function searchCustomer(Request $request)
