@@ -126,7 +126,7 @@
         </form>
 
         <div class="form-footer">
-            Already have an account? <a href="/my-login">Sign In</a>
+            Already have an account? <a href="/my-login">Login</a>
         </div>
     </div>
 </body>

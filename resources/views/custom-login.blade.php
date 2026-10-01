@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In — Maria Art's Loyalty System</title>
+    <title>Login — Maria Art's Loyalty System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -320,7 +320,7 @@
     <div class="form-panel">
         <div class="form-header">
             <div class="form-header-text">
-                <h2 id="formTitle">Sign In</h2>
+                <h2 id="formTitle">Login</h2>
                 <p id="formSubtitle">Enter your credentials.</p>
             </div>
             <button type="button" class="staff-tab" id="staffTab">Staff</button>
@@ -354,7 +354,7 @@
                 <input type="password" name="password" id="password" required autocomplete="current-password">
             </div>
 
-            <button type="submit" id="loginBtn">Sign In</button>
+            <button type="submit" id="loginBtn">Login</button>
         </form>
 
         <div class="form-footer" style="margin-top:1rem;">
@@ -379,14 +379,14 @@
                 staffTab.classList.add('active');
                 roleInput.value = 'staff';
                 formTitle.textContent = 'Staff Access';
-                formSubtitle.textContent = 'Sign in as staff.';
+                formSubtitle.textContent = 'Login as staff.';
             }
 
             function enterCustomerMode() {
                 isStaff = false;
                 staffTab.classList.remove('active');
                 roleInput.value = 'customer';
-                formTitle.textContent = 'Sign In';
+                formTitle.textContent = 'Login';
                 formSubtitle.textContent = 'Enter your credentials.';
             }
 

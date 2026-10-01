@@ -223,7 +223,7 @@
             </div>
         </div>
 
-        <a href="/my-login" class="back-link">← Back to Sign In</a>
+        <a href="/my-login" class="back-link">← Back to Login</a>
     </div>
 
 </body>
