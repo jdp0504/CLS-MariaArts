@@ -169,8 +169,10 @@ class GenerateNotificationController extends Controller
             return redirect('/admin/generate-notification')->with('error', 'No recipients selected.');
         }
 
-        $recipients = Customer::whereIn('customerID', $recipientIds)
-            ->where('status', 'active')
+        $recipients = Customer::whereIn('Customer.customerID', $recipientIds)
+            ->where('Customer.status', 'active')
+            ->leftJoin('User', 'User.userID', '=', 'Customer.customerID')
+            ->select('Customer.*', 'User.username')
             ->get();
 
         if ($recipients->isEmpty()) {
