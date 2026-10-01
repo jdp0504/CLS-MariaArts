@@ -135,6 +135,7 @@
                     <th>Email</th>
                     <th>Points</th>
                     <th>Status</th>
+                    <th>Last Activity</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -151,6 +152,17 @@
                             </span>
                         </td>
                         <td>
+                            @if ($customer->hasActivity)
+                                <span style="font-weight:600;font-size:0.82rem;">{{ $customer->lastActivityDate }}</span>
+                                <span style="display:block;color:var(--text-tertiary);font-size:0.72rem;">{{ $customer->lastActivityLabel }}</span>
+                            @else
+                                <span style="display:block;color:var(--text-tertiary);font-size:0.82rem;">Never active</span>
+                                @if ($customer->registeredDate)
+                                    <span style="display:block;color:var(--text-tertiary);font-size:0.72rem;">joined {{ $customer->registeredDate }} ({{ $customer->lastActivityLabel }})</span>
+                                @endif
+                            @endif
+                        </td>
+                        <td>
                             <button type="button"
                                 class="btn-change {{ $customer->status === 'active' ? 'active' : 'inactive' }}"
                                 onclick="confirmChange('{{ $customer->customerID }}', '{{ addslashes($customer->customerName) }}', '{{ $customer->status }}')">
@@ -159,7 +171,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="empty">No members found matching your criteria.</td></tr>
+                    <tr><td colspan="7" class="empty">No members found matching your criteria.</td></tr>
                 @endforelse
             </tbody>
         </table>

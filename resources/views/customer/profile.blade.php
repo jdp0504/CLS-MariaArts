@@ -109,13 +109,7 @@
                 <span class="err-icon">!</span>
                 <span>
                     @foreach ($errors->all() as $e)
-                        @if (Str::contains($e, 'email'))
-                            The Email and Phone Number is already taken by another customer.
-                        @elseif (Str::contains($e, 'phone'))
-                            Invalid Detail
-                        @else
-                            {{ $e }}
-                        @endif
+                        {{ $e }}<br>
                     @endforeach
                 </span>
             </div>

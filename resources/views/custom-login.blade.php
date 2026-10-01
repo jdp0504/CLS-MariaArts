@@ -362,7 +362,7 @@
         </div>
 
         <div class="form-footer">
-            Not a member? <a href="/register">Join Loyalty Program</a>
+            Not a member? <a href="/register">Register Loyalty Account</a>
         </div>
     </div>
 

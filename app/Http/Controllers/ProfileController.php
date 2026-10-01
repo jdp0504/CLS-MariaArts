@@ -28,8 +28,13 @@ class ProfileController extends Controller
         $request->validate([
             'customerName' => 'required|string|max:150',
             'email'        => 'required|email|max:100|unique:Customer,email,' . $customer->customerID . ',customerID',
-            'phoneNumber'  => 'nullable|string|max:20',
+            'phoneNumber'  => 'required|string|max:20|unique:Customer,phoneNumber,' . $customer->customerID . ',customerID',
             'birthDate'    => 'nullable|date',
+        ], [
+            'email.unique'       => 'This email is already registered by another customer.',
+            'phoneNumber.unique' => 'This phone number is already registered by another customer.',
+            'email.required'     => 'Email is required.',
+            'phoneNumber.required' => 'Phone number is required.',
         ]);
 
         $customer->update([

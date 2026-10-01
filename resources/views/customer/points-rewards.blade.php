@@ -155,7 +155,7 @@
             <div class="note-icon">i</div>
             <div>
                 <strong>How to Redeem a Reward</strong>
-                <p>To redeem a reward, visit the store and ask the cashier to process your redemption using your phone number or email.</p>
+                <p>To redeem a reward, visit the store and ask the cashier to process your redemption using your phone number.</p>
             </div>
         </div>
 
