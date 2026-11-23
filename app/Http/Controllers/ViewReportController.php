@@ -146,7 +146,8 @@ class ViewReportController extends Controller
 
             $rPts = Referral::whereBetween('dateRef', [$fromDate, $toDate])
                 ->when($custId !== 'all', fn($q) => $q->where('customerID', $custId));
-            $rSum = $rPts->sum('pointGranted'); $rCnt = $rPts->count();
+            $rSum = $rPts->sum('pointGranted');
+            $rCnt = (clone $rPts)->where('referralType', 'referrer')->count();
 
             $rdQ = DB::table('Redemption')
                 ->join('Reward', 'Redemption.rewardID', '=', 'Reward.rewardID')
@@ -161,19 +162,22 @@ class ViewReportController extends Controller
                 'total_tx' => $pCnt + $rCnt + $rdCnt,
             ];
 
+            // Sum purchase and referral points separately so neither is multiplied by the other
+            $purchasePts = DB::table('PurchaseTransaction')
+                ->selectRaw('customerID, SUM(pointEarned) as pts')
+                ->whereBetween('transactionDate', [$fromDate, $toDate])
+                ->groupBy('customerID');
+            $referralPts = DB::table('Referral')
+                ->selectRaw('customerID, SUM(pointGranted) as pts')
+                ->whereBetween('dateRef', [$fromDate, $toDate])
+                ->groupBy('customerID');
+
             $topEarners = DB::table('Customer')
-                ->leftJoin('PurchaseTransaction', function ($j) use ($fromDate, $toDate) {
-                    $j->on('Customer.customerID', '=', 'PurchaseTransaction.customerID')
-                      ->whereBetween('PurchaseTransaction.transactionDate', [$fromDate, $toDate]);
-                })
-                ->leftJoin('Referral', function ($j) use ($fromDate, $toDate) {
-                    $j->on('Customer.customerID', '=', 'Referral.customerID')
-                      ->whereBetween('Referral.dateRef', [$fromDate, $toDate]);
-                })
-                ->selectRaw('Customer.customerID, Customer.customerName, Customer.email, COALESCE(SUM(PurchaseTransaction.pointEarned), 0) + COALESCE(SUM(Referral.pointGranted), 0) as points')
+                ->leftJoinSub($purchasePts, 'pp', 'pp.customerID', '=', 'Customer.customerID')
+                ->leftJoinSub($referralPts, 'rp', 'rp.customerID', '=', 'Customer.customerID')
+                ->selectRaw('Customer.customerID, Customer.customerName, Customer.email, COALESCE(pp.pts, 0) + COALESCE(rp.pts, 0) as points')
                 ->where('Customer.status', 'active')
                 ->when($custId !== 'all', fn($q) => $q->where('Customer.customerID', $custId))
-                ->groupBy('Customer.customerID', 'Customer.customerName', 'Customer.email')
                 ->orderByDesc('points')
                 ->limit(10)
                 ->get();

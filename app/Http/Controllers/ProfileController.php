@@ -29,12 +29,13 @@ class ProfileController extends Controller
             'customerName' => 'required|string|max:150',
             'email'        => 'required|email|max:100|unique:Customer,email,' . $customer->customerID . ',customerID',
             'phoneNumber'  => 'required|string|max:20|unique:Customer,phoneNumber,' . $customer->customerID . ',customerID',
-            'birthDate'    => 'nullable|date',
+            'birthDate'    => 'required|date|before:today',
         ], [
             'email.unique'       => 'This email is already registered by another customer.',
             'phoneNumber.unique' => 'This phone number is already registered by another customer.',
             'email.required'     => 'Email is required.',
             'phoneNumber.required' => 'Phone number is required.',
+            'birthDate.required'   => 'Birth date is required.',
         ]);
 
         $customer->update([

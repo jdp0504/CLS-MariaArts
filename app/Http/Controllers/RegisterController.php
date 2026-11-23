@@ -21,8 +21,8 @@ class RegisterController extends Controller
             'customerName'  => 'required|string|max:150',
             'username'      => 'required|string|max:50|unique:User,username',
             'email'         => 'required|email|max:100|unique:Customer,email',
-            'phoneNumber'   => 'nullable|string|max:20|unique:Customer,phoneNumber',
-            'birthDate'     => 'nullable|date',
+            'phoneNumber'   => 'required|string|max:20|unique:Customer,phoneNumber',
+            'birthDate'     => 'required|date|before:today',
             'password'      => 'required|min:4',
             'referral_code' => 'nullable|string|max:50|exists:Customer,referralCode',
         ], [
@@ -32,7 +32,11 @@ class RegisterController extends Controller
             'email.required'        => 'Incomplete or Invalid Information',
             'email.email'           => 'Please include an \'@\' in the email address',
             'email.unique'          => 'Customer already registered',
+            'phoneNumber.required'  => 'Incomplete or Invalid Information',
             'phoneNumber.unique'    => 'Customer already registered',
+            'birthDate.required'    => 'Incomplete or Invalid Information',
+            'birthDate.date'        => 'Incomplete or Invalid Information',
+            'birthDate.before'      => 'Incomplete or Invalid Information',
             'password.required'     => 'Incomplete or Invalid Information',
             'password.min'          => 'Incomplete or Invalid Information',
             'referral_code.exists'  => 'Invalid referral code',
@@ -71,13 +75,22 @@ class RegisterController extends Controller
 
             $lastRef = Referral::orderBy('referralID', 'desc')->first();
             $refNum = $lastRef ? (int) substr($lastRef->referralID, 3) + 1 : 1;
-            $referralID = 'REF' . str_pad($refNum, 3, '0', STR_PAD_LEFT);
+            $today = now()->toDateString();
 
+            // One row per customer who receives the 5-point bonus
             Referral::create([
-                'referralID'   => $referralID,
+                'referralID'   => 'REF' . str_pad($refNum, 3, '0', STR_PAD_LEFT),
                 'customerID'   => $referrer->customerID,
                 'pointGranted' => 5,
-                'dateRef'      => now()->toDateString(),
+                'dateRef'      => $today,
+                'referralType' => 'referrer',
+            ]);
+            Referral::create([
+                'referralID'   => 'REF' . str_pad($refNum + 1, 3, '0', STR_PAD_LEFT),
+                'customerID'   => $customerID,
+                'pointGranted' => 5,
+                'dateRef'      => $today,
+                'referralType' => 'referred',
             ]);
 
             $referrer->increment('currentPoints', 5);

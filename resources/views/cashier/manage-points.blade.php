@@ -205,6 +205,10 @@
             </div>
         @endif
 
+        @if ($errors->any())
+            <div class="alert alert-error">{{ $errors->first() }}</div>
+        @endif
+
         {{-- ══════ STEP 1: Search by phone ══════ --}}
         @if (!$customer)
             <a href="/cashier-dashboard" class="step-link">&larr;</a>
@@ -295,7 +299,7 @@
                                 <div class="rmeta">{{ $r->pointRequired }} pts &middot; Stock: {{ $r->stock }}</div>
                             </div>
                             @if ($customer->currentPoints >= $r->pointRequired)
-                                <form method="POST" action="/cashier/manage-points/redeem" style="margin:0;">
+                                <form method="POST" action="/cashier/manage-points/redeem" style="margin:0;" onsubmit="return confirm('Redeem {{ addslashes($r->rewardName) }} for {{ $r->pointRequired }} points?');">
                                     @csrf
                                     <input type="hidden" name="rewardID" value="{{ $r->rewardID }}">
                                     <button type="submit" class="redeem-btn">Redeem</button>
