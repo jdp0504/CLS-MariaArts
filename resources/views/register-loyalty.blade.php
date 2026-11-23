@@ -104,12 +104,12 @@
             </div>
             <div class="form-group">
                 <label>Phone Number</label>
-                <input type="text" name="phoneNumber" value="{{ old('phoneNumber') }}">
+                <input type="text" name="phoneNumber" value="{{ old('phoneNumber') }}" required>
                 @error('phoneNumber') <span style="color:#b91c1c;font-size:0.78rem;">{{ $message }}</span> @enderror
             </div>
             <div class="form-group">
                 <label>Birth Date</label>
-                <input type="date" name="birthDate" value="{{ old('birthDate') }}">
+                <input type="date" name="birthDate" value="{{ old('birthDate') }}" max="{{ now()->subDay()->toDateString() }}" required>
                 @error('birthDate') <span style="color:#b91c1c;font-size:0.78rem;">{{ $message }}</span> @enderror
             </div>
             <div class="form-group">

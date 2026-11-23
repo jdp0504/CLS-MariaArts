@@ -111,14 +111,16 @@ class GenerateNotificationController extends Controller
             'messageContent' => 'required|string',
             'action'         => 'required|in:draft,send',
         ], [
-            'subject.required'        => 'Invalid Message',
-            'messageContent.required' => 'Invalid Message',
+            'subject.required'        => 'Subject is required',
+            'messageContent.required' => 'Message is required',
             'action.required'         => 'Invalid Message',
         ]);
 
-        if (trim($request->subject) === '' || trim($request->messageContent) === '') {
-            return redirect('/admin/generate-notification')
-                ->with('error', 'Invalid Message');
+        if (trim($request->subject) === '') {
+            return redirect('/admin/generate-notification')->with('error', 'Subject is required');
+        }
+        if (trim($request->messageContent) === '') {
+            return redirect('/admin/generate-notification')->with('error', 'Message is required');
         }
 
         $attachmentResult = $this->handleAttachment($request);
@@ -166,7 +168,7 @@ class GenerateNotificationController extends Controller
 
         $recipientIds = $request->input('recipients', []);
         if (empty($recipientIds)) {
-            return redirect('/admin/generate-notification')->with('error', 'No recipients selected.');
+            return redirect('/admin/generate-notification')->with('error', 'Select at least one recipient.');
         }
 
         $recipients = Customer::whereIn('Customer.customerID', $recipientIds)

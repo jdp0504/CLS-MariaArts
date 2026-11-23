@@ -13,6 +13,6 @@ class Referral extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'referralID', 'customerID', 'pointGranted', 'dateRef',
+        'referralID', 'customerID', 'pointGranted', 'dateRef', 'referralType',
     ];
 }

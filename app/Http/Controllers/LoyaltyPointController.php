@@ -180,6 +180,10 @@ class LoyaltyPointController extends Controller
 
         $reward = Reward::findOrFail($request->rewardID);
 
+        if ($reward->status !== 'active') {
+            return back()->with('error', 'This reward is no longer available.');
+        }
+
         if ($customer->currentPoints < $reward->pointRequired) {
             return back()->with('error', "Insufficient points. {$customer->customerName} has {$customer->currentPoints} points but needs {$reward->pointRequired}.");
         }

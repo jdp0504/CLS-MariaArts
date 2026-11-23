@@ -137,11 +137,11 @@
                 </div>
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="text" name="phoneNumber" value="{{ old('phoneNumber', $customer->phoneNumber) }}">
+                    <input type="text" name="phoneNumber" value="{{ old('phoneNumber', $customer->phoneNumber) }}" required>
                 </div>
                 <div class="form-group">
                     <label>Birth Date</label>
-                    <input type="date" name="birthDate" value="{{ old('birthDate', $customer->birthDate) }}">
+                    <input type="date" name="birthDate" value="{{ old('birthDate', $customer->birthDate) }}" required>
                 </div>
                 <button type="submit" class="btn">Save Changes</button>
             </form>

@@ -18,7 +18,9 @@ class ViewPointController extends Controller
         $customer = Customer::where('customerID', session('user_id'))->firstOrFail();
         $rewards = Reward::where('status', 'active')->where('stock', '>', 0)->get();
         $redeemedCount = Redemption::where('customerID', $customer->customerID)->count();
-        $referralCount = Referral::where('customerID', $customer->customerID)->count();
+        $referralCount = Referral::where('customerID', $customer->customerID)
+            ->where('referralType', 'referrer')
+            ->count();
 
         return view('customer-dashboard', compact('customer', 'rewards', 'redeemedCount', 'referralCount'));
     }
@@ -32,7 +34,9 @@ class ViewPointController extends Controller
         $customer = Customer::where('customerID', session('user_id'))->firstOrFail();
         $rewards = Reward::where('status', 'active')->where('stock', '>', 0)->get();
         $redeemedCount = Redemption::where('customerID', $customer->customerID)->count();
-        $referralCount = Referral::where('customerID', $customer->customerID)->count();
+        $referralCount = Referral::where('customerID', $customer->customerID)
+            ->where('referralType', 'referrer')
+            ->count();
         $redemptions = Redemption::where('customerID', $customer->customerID)
             ->orderBy('redeemedDate', 'desc')
             ->get();

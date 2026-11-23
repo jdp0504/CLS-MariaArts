@@ -48,6 +48,13 @@ class LoginController extends Controller
         }
 
         if ($user && Hash::check($password, $user->password)) {
+            if ($user->role === 'customer') {
+                $status = \App\Models\Customer::where('customerID', $user->userID)->value('status');
+                if ($status !== 'active') {
+                    return back()->with('error', 'Your loyalty account has been archived. Please contact Maria Art staff to reactivate it.');
+                }
+            }
+
             session([
                 'user_id' => $user->userID,
                 'username' => $user->username,
