@@ -20,4 +20,6 @@ php artisan db:seed --force
 
 php artisan storage:link --force 2>/dev/null || true
 
-exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
+# --no-reload passes Render's environment variables (DB_*, etc.) to the web
+# server. Without it, "artisan serve" drops them and falls back to .env (SQLite).
+exec php artisan serve --host=0.0.0.0 --port=${PORT:-8000} --no-reload
