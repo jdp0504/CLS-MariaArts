@@ -1,15 +1,22 @@
 #!/bin/bash
 
-touch database/database.sqlite
+# Only needed when running on the local SQLite file
+if [ "${DB_CONNECTION:-sqlite}" = "sqlite" ]; then
+    touch database/database.sqlite
+fi
 
 mkdir -p storage/framework/{cache,sessions,views}
 mkdir -p storage/logs
 mkdir -p bootstrap/cache
 chmod -R 775 storage bootstrap/cache
 
-php artisan migrate --force
+# Adds only new tables/columns; existing data is kept.
+# If the database can't be reached, stop here so Render marks the deploy as
+# failed and keeps the previous version running.
+php artisan migrate --force || { echo "Database migration failed - check DB_* settings"; exit 1; }
 
-php artisan db:seed --force || true
+# Inserts the demo accounts only when the database is empty
+php artisan db:seed --force
 
 php artisan storage:link --force 2>/dev/null || true
 

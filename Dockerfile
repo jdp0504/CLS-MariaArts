@@ -1,11 +1,11 @@
 FROM php:8.4-cli
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip libssl-dev \
+    git curl zip unzip libssl-dev ca-certificates \
     libpng-dev libxml2-dev libsqlite3-dev libzip-dev libonig-dev libicu-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_sqlite mbstring bcmath zip intl
+RUN docker-php-ext-install pdo_sqlite pdo_mysql mbstring bcmath zip intl
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
