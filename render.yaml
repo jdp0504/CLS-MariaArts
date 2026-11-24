@@ -10,10 +10,22 @@ services:
         value: "false"
       - key: APP_URL
         value: "https://cls-maria-arts.onrender.com"
+      # Database: TiDB Cloud Starter (MySQL-compatible), so data survives restarts.
+      # Fill in the four "sync: false" values in the Render dashboard (Environment tab).
       - key: DB_CONNECTION
-        value: sqlite
+        value: mysql
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "4000"
       - key: DB_DATABASE
-        value: "database/database.sqlite"
+        value: cls_mariaarts
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: MYSQL_ATTR_SSL_CA
+        value: /etc/ssl/certs/ca-certificates.crt
       - key: SESSION_DRIVER
         value: database
       - key: QUEUE_CONNECTION

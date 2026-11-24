@@ -10,6 +10,12 @@ class LoyaltyUserSeeder extends Seeder
 {
     public function run(): void
     {
+        // Persistent database: only insert the demo data the first time
+        if (DB::table('User')->exists()) {
+            $this->command?->info('Demo data already present – skipping seeder.');
+            return;
+        }
+
         $now = now()->toDateString();
 
         // ─── User table ───
