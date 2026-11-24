@@ -13,7 +13,7 @@ class Notification extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'adminID', 'customerID', 'messageContent', 'subject', 'attachment',
+        'notificationID', 'adminID', 'customerID', 'messageContent', 'subject', 'attachment',
         'filterType', 'filterValue', 'creationDate', 'status',
     ];
 }
